@@ -1,0 +1,90 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syria USDT - تجربة التداول</title>
+  <style>
+    body {
+      font-family: "Tahoma", sans-serif;
+      background-color: #0d1117;
+      color: #e6edf3;
+      text-align: center;
+      padding: 50px 10px;
+    }
+    h1 {
+      color: #00c896;
+    }
+    .btn {
+      background-color: #00c896;
+      color: #0d1117;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:disabled {
+      background-color: #444;
+      color: #888;
+      cursor: not-allowed;
+    }
+    .timer {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #ff5555;
+    }
+  </style>
+</head>
+<body>
+  <h1>تجربة التداول - Syria USDT</h1>
+  <p>اختر الاتجاه لتجربة صفقة مدتها دقيقة واحدة.</p>
+  <button class="btn" id="upBtn">ارتفاع 📈</button>
+  <button class="btn" id="downBtn">انخفاض 📉</button>
+  <div class="timer" id="timer"></div>
+
+  <script>
+    const upBtn = document.getElementById("upBtn");
+    const downBtn = document.getElementById("downBtn");
+    const timerDiv = document.getElementById("timer");
+
+    function startTrade() {
+      upBtn.disabled = true;
+      downBtn.disabled = true;
+      let countdown = 60;
+      const interval = setInterval(() => {
+        countdown--;
+        timerDiv.textContent = "الصفقة قيد التنفيذ... " + countdown + " ثانية";
+        if (countdown === 0) {
+          clearInterval(interval);
+          timerDiv.textContent = "نتيجة الصفقة: خسارة 1٪ ❌";
+          setTimeout(() => {
+            start24hTimer();
+          }, 3000);
+        }
+      }, 1000);
+    }
+
+    function start24hTimer() {
+      let timeLeft = 24 * 60 * 60;
+      const countdownInterval = setInterval(() => {
+        timeLeft--;
+        const hours = Math.floor(timeLeft / 3600);
+        const minutes = Math.floor((timeLeft % 3600) / 60);
+        const seconds = timeLeft % 60;
+        timerDiv.textContent = `الصفقة القادمة بعد: ${hours}س ${minutes}د ${seconds}ث`;
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          upBtn.disabled = false;
+          downBtn.disabled = false;
+          timerDiv.textContent = "";
+        }
+      }, 1000);
+    }
+
+    upBtn.onclick = startTrade;
+    downBtn.onclick = startTrade;
+  </script>
+</body>
+</html>
